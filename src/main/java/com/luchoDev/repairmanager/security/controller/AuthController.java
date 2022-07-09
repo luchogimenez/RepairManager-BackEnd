@@ -67,12 +67,16 @@ public class AuthController {
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUser loginUser,BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return new ResponseEntity(new Message("error login"),HttpStatus.BAD_REQUEST);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUser.getUsername(),loginUser.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtProvider.generateToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        JwtDto jwtDto = new JwtDto(jwt,userDetails.getUsername(),userDetails.getAuthorities());
-        return new ResponseEntity(jwtDto,HttpStatus.OK);
+        try{
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginUser.getUsername(),loginUser.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtProvider.generateToken(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            JwtDto jwtDto = new JwtDto(jwt,userDetails.getUsername(),userDetails.getAuthorities());
+            return new ResponseEntity(jwtDto,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Message(e.getMessage()),HttpStatus.BAD_REQUEST);
+        }
     }
 }
