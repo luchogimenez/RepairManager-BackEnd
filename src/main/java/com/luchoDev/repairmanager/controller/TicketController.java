@@ -5,10 +5,7 @@ import com.luchoDev.repairmanager.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,15 @@ public class TicketController {
 
     @GetMapping()
     public ResponseEntity<List<Ticket>> getTicketList(){
-        return new ResponseEntity<>(ticketService.getTicketList(), HttpStatus.OK);
+        return new ResponseEntity<>(ticketService.findAll(), HttpStatus.OK);
+    }
+    @PostMapping()
+    public ResponseEntity<Ticket> create(@RequestBody Ticket ticket){
+        return new ResponseEntity<>(ticketService.create(ticket), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Ticket> update(@RequestBody Ticket ticket,@PathVariable("id") Long id){
+        return new ResponseEntity<>(ticketService.update(ticket,id), HttpStatus.OK);
     }
 }
