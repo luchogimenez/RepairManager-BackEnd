@@ -13,8 +13,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String city;
     private String address;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Phone> phones;
 }
-

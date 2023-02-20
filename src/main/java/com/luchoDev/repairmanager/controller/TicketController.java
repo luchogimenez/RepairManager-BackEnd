@@ -16,6 +16,10 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+    @GetMapping("/{id}")
+    public ResponseEntity<Ticket> findById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(ticketService.findById(id), HttpStatus.OK);
+    }
 
     @GetMapping()
     public ResponseEntity<List<Ticket>> getTicketList(){
