@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -16,8 +17,8 @@ public class Ticket {
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
-    private Date createDate;
-    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
-    private Date updateDate;
+    //@JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
+    private LocalDateTime createDate;
+    //@JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
+    private LocalDateTime updateDate;
 }
